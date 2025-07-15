@@ -61,19 +61,33 @@ Can you come up with an algorithm with time complexity less than \(O(n^2)\)?
 package main
 
 func twoSum(nums []int, target int) []int {
+	// nums []int 声明了一个类型为[]int 的切片（slice）变量。切片是Go语言中动态数组的抽象
 	// 声明一个哈希表，用来存储
-	s_map := make(map[int]int, len(nums))
+	sMap := make(map[int]int, len(nums))
+
+	//range nums 会遍历切片 nums 的每个元素。
+	// 每次迭代返回两个值：
+	// i：当前元素的下标（从0开始）
+	// num：当前元素的值拷贝（修改num不会影响原始切片）
+	//如果切片为 nil，循环会安全执行 0 次（不会报错）。
 	for i, num := range nums {
-		// 临时变量 2: 计算差值
+
+		// 计算差值
 		complement := target - num
 
 		// 检查差值是否在哈希表中
-		if idx, found := s_map[complement]; found {
+		// Go语言中 判断map中键是否存在的特殊写法，格式如下:
+		// value, ok := map[key]
+		// if 格式
+		// if 初始化语句; 布尔表达式 {}   初始化语句未必就是定义变量， 如 println("init") 也是可以的。
+		
+		if idx, found := sMap[complement]; found {
 			return []int{idx, i} // 找到解
 		}
 
 		// 将当前数字存入哈希表
-		s_map[num] = i
+		// 当前下标，存为value；当前对应的值，存为key
+		sMap[num] = i
 	}
 	return []int{0, 0}
 }
